@@ -56,12 +56,22 @@ function presionar9(){
 }
 
 function presionarSuma(){
-    if(!input.endsWith('+') && !input.endsWith('-')) input += '+';
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x')) input += '+';
     actualizarPantalla();
 }
 
 function presionarResta(){
-    if(!input.endsWith('+') && !input.endsWith('-')) input += '-';
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x')) input += '-';
+    actualizarPantalla();
+}
+
+function presionarMultiplicacion(){
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x')) input += 'x';
+    actualizarPantalla();
+}
+
+function presionarBackspace(){
+    input = input.slice(0,-1);
     actualizarPantalla();
 }
 
@@ -73,46 +83,67 @@ function resultado(){
 
     let n = 0;
 
-    console.log(input);
     if(input.startsWith('-')){
         operadores[0] = '-';
         input = input.substr(1,input.length)
-    }else if(input.startsWith('+')){
+    }else if(input.startsWith('+') || input.startsWith('x')){
         operadores[0] = '+';
         input = input.substr(1,input.length)
     }else{
         operadores[0] = '+';
     }
-    console.log(input);
 
     for(i = 0; i < input.length; i++){
         numeros[i] = '';
-        if(input[i] != '+' && input[i] != '-'){
+        if(input[i] != '+' && input[i] != '-' && input[i] != 'x'){
             numeros[n] += input[i];
         }else{
             n++; 
             operadores[n] = input[i];
-
         }
         
     }
     console.log(numeros);
     console.log(operadores);
+    console.log("-----");
 
+    //HACER MULTIPLICACION ANTES
+    for(i = 0; i < numeros.length; i++){
+        if(operadores[i] == 'x'){
+            operadores[i] = '+';
+
+            if(operadores[i-1] == '-'){
+                numeros[i] = numeros[i] * -numeros[i-1];
+            }else{
+                numeros[i] = numeros[i] * numeros[i-1];
+            }
+            numeros[i-1] = '0';
+
+        }else if(operadores[i] == 'undefined'){
+            i = numeros.length;
+        }
+        
+    }
+   
+    console.log(numeros);
+    console.log(operadores);
+
+    //SUMA - RESTA
     for(i = 0; i < numeros.length; i++){
         if(numeros[i] != ''){
             if(operadores[i] == '+'){
                 resultadoFinal += parseInt(numeros[i]);
             }else if(operadores[i] == '-'){
                 resultadoFinal -= parseInt(numeros[i]);
+            }else if(operadores[i] == 'x'){
+                //NADA
             }else{
-                i = numeros.length+1;
+                i = numeros.length;
             }
         }else{
             i = numeros.length+1;
         }
     }
-
     input = resultadoFinal.toString();
     actualizarPantalla();
 }

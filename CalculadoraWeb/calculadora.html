@@ -22,11 +22,14 @@
                 <button id="numero9" onclick="presionar9()">9</button>
             </div>
             <div class="operadores">
+                <button id="backspace" onclick="presionarBackspace()"><--</button>
+                <button id="multiplicar" onclick="presionarMultiplicacion()">x</button>
                 <button id="sumar" onclick="presionarSuma()">+</button>
                 <button id="restar" onclick="presionarResta()">-</button>
                 <button id="igual" onclick="resultado()">=</button>
+
             </div>
-            <input id="pantalla" type="text" value=""/>
+            <input id="pantalla" type="text" value="" readonly/>
         </div>
         <script src="main.js"></script>
     </body>
