@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="normalize.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+
+    <body>
+        <div class="calculadora">
+
+            <div class="numeros">
+                <button id="numero0" onclick="presionar0()">0</button>
+                <button id="numero1" onclick="presionar1()">1</button>
+                <button id="numero2" onclick="presionar2()">2</button>
+                <button id="numero3" onclick="presionar3()">3</button>
+                <button id="numero4" onclick="presionar4()">4</button>
+                <button id="numero5" onclick="presionar5()">5</button>
+                <button id="numero6" onclick="presionar6()">6</button>
+                <button id="numero7" onclick="presionar7()">7</button>
+                <button id="numero8" onclick="presionar8()">8</button>
+                <button id="numero9" onclick="presionar9()">9</button>
+            </div>
+            <div class="operadores">
+                <button id="sumar" onclick="presionarSuma()">+</button>
+                <button id="restar" onclick="presionarResta()">-</button>
+                <button id="igual" onclick="resultado()">=</button>
+            </div>
+            <input id="pantalla" type="text" value=""/>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
