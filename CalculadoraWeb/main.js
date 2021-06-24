@@ -3,6 +3,8 @@ let input = "";
 
 function actualizarPantalla(){
     pantalla.setAttribute('value',input);
+    pantalla.style.fontSize = 67 - input.length + 'px';
+    console.log(pantalla.style.fontSize)
 }
 
 function presionar0(){
@@ -55,25 +57,33 @@ function presionar9(){
     actualizarPantalla();
 }
 
-function presionarSuma(){
-    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x')) input += '+';
-    actualizarPantalla();
-}
-
-function presionarResta(){
-    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x')) input += '-';
-    actualizarPantalla();
-}
-
-function presionarMultiplicacion(){
-    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x')) input += 'x';
-    actualizarPantalla();
-}
 
 function presionarBackspace(){
     input = input.slice(0,-1);
     actualizarPantalla();
 }
+
+function presionarDivision(){
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x') && !input.endsWith('÷')) input += '÷';
+    actualizarPantalla();
+}
+
+function presionarMultiplicacion(){
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x') && !input.endsWith('÷')) input += 'x';
+    actualizarPantalla();
+}
+
+
+function presionarSuma(){
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x') && !input.endsWith('÷')) input += '+';
+    actualizarPantalla();
+}
+
+function presionarResta(){
+    if(!input.endsWith('+') && !input.endsWith('-') && !input.endsWith('x') && !input.endsWith('÷')) input += '-';
+    actualizarPantalla();
+}
+
 
 function resultado(){
     let numeros = [];
@@ -86,7 +96,7 @@ function resultado(){
     if(input.startsWith('-')){
         operadores[0] = '-';
         input = input.substr(1,input.length)
-    }else if(input.startsWith('+') || input.startsWith('x')){
+    }else if(input.startsWith('+') || input.startsWith('x') || input.startsWith('÷')){
         operadores[0] = '+';
         input = input.substr(1,input.length)
     }else{
@@ -95,7 +105,7 @@ function resultado(){
 
     for(i = 0; i < input.length; i++){
         numeros[i] = '';
-        if(input[i] != '+' && input[i] != '-' && input[i] != 'x'){
+        if(input[i] != '+' && input[i] != '-' && input[i] != 'x'  && input[i] != '÷'){
             numeros[n] += input[i];
         }else{
             n++; 
@@ -106,6 +116,23 @@ function resultado(){
     console.log(numeros);
     console.log(operadores);
     console.log("-----");
+
+    //HACER DIVISION
+    for(i = 0; i < numeros.length; i++){
+        if(operadores[i] == '÷'){
+            operadores[i] = '+';
+
+            if(operadores[i-1] == '-'){
+                numeros[i] = -numeros[i-1] / numeros[i];
+            }else{
+                numeros[i] = numeros[i-1] / numeros[i];
+            }
+            numeros[i-1] = '0';
+
+        }else if(operadores[i] == 'undefined'){
+            i = numeros.length;
+        }
+    }
 
     //HACER MULTIPLICACION ANTES
     for(i = 0; i < numeros.length; i++){
@@ -132,10 +159,10 @@ function resultado(){
     for(i = 0; i < numeros.length; i++){
         if(numeros[i] != ''){
             if(operadores[i] == '+'){
-                resultadoFinal += parseInt(numeros[i]);
+                resultadoFinal += parseFloat(numeros[i]);
             }else if(operadores[i] == '-'){
-                resultadoFinal -= parseInt(numeros[i]);
-            }else if(operadores[i] == 'x'){
+                resultadoFinal -= parseFloat(numeros[i]);
+            }else if(operadores[i] == 'x' || operadores[i] == '÷'){
                 //NADA
             }else{
                 i = numeros.length;

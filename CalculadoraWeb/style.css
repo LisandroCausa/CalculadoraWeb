@@ -8,7 +8,7 @@
     width:  400px;
     height: 600px;
     position: relative;
-    outline: 4px solid black;
+    outline: 10px solid black;
 }
 
 #pantalla{
@@ -101,6 +101,11 @@ button{
 #backspace{
     top: 100px;
     left: 200px;
+}
+
+#dividir{
+    top: 100px;
+    left: 300px;
 }
 
 #multiplicar{
