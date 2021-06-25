@@ -4,7 +4,6 @@ let input = "";
 function actualizarPantalla(){
     pantalla.setAttribute('value',input);
     pantalla.style.fontSize = 67 - input.length + 'px';
-    console.log(pantalla.style.fontSize)
 }
 
 function presionar0(){
@@ -108,26 +107,26 @@ function resultado(){
         if(input[i] != '+' && input[i] != '-' && input[i] != 'x'  && input[i] != '÷'){
             numeros[n] += input[i];
         }else{
-            n++; 
+            n++;
             operadores[n] = input[i];
+
+            if(operadores[n-1] == '-'){
+                operadores[n-1] = '+';
+                numeros[n-1] = -numeros[n-1];
+            }
         }
         
     }
-    console.log(numeros);
-    console.log(operadores);
-    console.log("-----");
 
     //HACER DIVISION
     for(i = 0; i < numeros.length; i++){
         if(operadores[i] == '÷'){
-            operadores[i] = '+';
 
-            if(operadores[i-1] == '-'){
-                numeros[i] = -numeros[i-1] / numeros[i];
-            }else{
-                numeros[i] = numeros[i-1] / numeros[i];
-            }
-            numeros[i-1] = '0';
+            numeros[i-1] = numeros[i-1] / numeros[i];
+            
+            numeros.splice(i,1);
+            operadores.splice(i,1);
+            i--;
 
         }else if(operadores[i] == 'undefined'){
             i = numeros.length;
@@ -137,24 +136,25 @@ function resultado(){
     //HACER MULTIPLICACION ANTES
     for(i = 0; i < numeros.length; i++){
         if(operadores[i] == 'x'){
-            operadores[i] = '+';
 
-            if(operadores[i-1] == '-'){
-                numeros[i] = numeros[i] * -numeros[i-1];
-            }else{
-                numeros[i] = numeros[i] * numeros[i-1];
-            }
-            numeros[i-1] = '0';
 
+            numeros[i-1] = numeros[i] * numeros[i-1];
+
+
+            numeros.splice(i,1);
+            operadores.splice(i,1);
+            i--;
         }else if(operadores[i] == 'undefined'){
             i = numeros.length;
         }
-        
+            console.log('i: '+i)
+            console.log(numeros);
+            console.log(operadores);
+
     }
    
-    console.log(numeros);
-    console.log(operadores);
 
+    console.log('---');
     //SUMA - RESTA
     for(i = 0; i < numeros.length; i++){
         if(numeros[i] != ''){
@@ -171,6 +171,9 @@ function resultado(){
             i = numeros.length+1;
         }
     }
+
+    console.log(numeros);
+    console.log(operadores); 
     input = resultadoFinal.toString();
     actualizarPantalla();
 }
